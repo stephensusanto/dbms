@@ -13,3 +13,4 @@ Database Management System USYD Project
 5. install in the requirement by running this script: pip instal -r requirement.txt
 6. Run script python manage.py migrate
 7. To run the application python manage.py runserver
+8. blablabla
