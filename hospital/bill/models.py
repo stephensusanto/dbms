@@ -14,6 +14,9 @@ class Bill(models.Model):
     discharge_date = models.DateTimeField(default=datetime.now())
     is_paid = models.BooleanField(default=False)
 
+    class Meta:
+        db_table = "bill"
+
     def __str__(self):
         return f"Bill ID: {self.id_bill}"
 
@@ -25,5 +28,8 @@ class Payment(models.Model):
     expired_date = models.DateField(validators=[MinValueValidator(datetime.now())])
     card_holder_name = models.CharField(max_length=30)
     
+    class Meta:
+        db_table = "payment"
+        
     def __str__(self):
         return f"Payment: {self.id_payment} - {self.id_bill.id_patient.full_name}"
