@@ -11,6 +11,5 @@ Database Management System USYD Project
    if using windows:
      env/Scripts/activate
 5. install in the requirement by running this script: pip instal -r requirement.txt
-6. Run script python manage.py migrate
+6. Run script python manage.py migrate --fake (because using existing database)
 7. To run the application python manage.py runserver
-8. blablabla
