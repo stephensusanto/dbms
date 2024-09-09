@@ -51,5 +51,8 @@ class Services(models.Model):
     name_of_services = models.CharField(max_length=20)
     services_cost = models.IntegerField(validators=[MinValueValidator(1)])
 
+    class Meta:
+        db_table = "services"
+
     def __str__(self):
         return f"Service ID: {self.id_services} - {self.name_of_services}"

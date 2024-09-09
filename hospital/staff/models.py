@@ -1,5 +1,4 @@
 from django.db import models
-from base.models import BaseModel
 from django.utils.text import slugify
 from department.models import Department
 from django.utils.translation import gettext_lazy as _
