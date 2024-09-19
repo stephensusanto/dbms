@@ -12,4 +12,4 @@ Database Management System USYD Project
      env/Scripts/activate
 5. install in the requirement by running this script: pip instal -r requirement.txt
 6.  Running SQL from assignment web
-7. run this on the folder project FLASK_APP=main:app flask run 
+7. run this on the folder project FLASK_APP=main:app flask run / python main.py 
