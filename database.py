@@ -70,17 +70,18 @@ class ConnectionDB:
 Validate staff based on username and password
 '''
 def checkLogin(login, password):
-    connect_db = ConnectionDB()
-    conn = connect_db.connect_to_database()
-    cursor = conn.cursor()
-    cursor.execute("\
-                            SELECT username, FirstName, LastName, Email\
-                            FROM administrator \
-                            WHERE username= %(username)s and password = %(password)s \
-                        ", {"username" :login, "password":password})
-    records = cursor.fetchone()
+    try:
+        connect_db = ConnectionDB()
+        conn = connect_db.connect_to_database()
+        cursor = conn.cursor()
+        cursor.callproc("login_process", [str(login), str(password)])
+        records = cursor.fetchone()
 
-    cursor.close()
+        cursor.close()
+    except psycopg2.Error as err:
+        print(err)
+    finally:
+        connect_db.close_connection()
     return records
 
 
