@@ -81,8 +81,18 @@ def findAdmissionsByCriteria(searchString):
 Add a new addmission 
 '''
 def addAdmission(type, department, patient, condition, admin):
+    try:
+        conn = openConnection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT add_admission (%s, %s, %s, %s, %s)", (str(type), str(department), str(patient), str(admin), str(condition)))
+        conn.commit()
+        cursor.close()
+        return True
+    except psycopg2.Error as err:
+        print(err)
+        return False
     
-    return
+    return admission_list
 
 
 '''
