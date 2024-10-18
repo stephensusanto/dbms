@@ -55,16 +55,17 @@ def findAdmissionsByAdmin(login):
     try:
         conn = openConnection()
         cursor = conn.cursor()
-        # TODO: CHECK QUERY AGAIN THERE IS STILL HAVE ANOMALY DATA IN FEE
         cursor.callproc("admission_data_based_on_login", [str(login)])
         records = cursor.fetchall()
         columns = [desc[0] for desc in cursor.description]
         admission_list = [dict(zip(columns, row)) for row in records]
         cursor.close()
+        return admission_list
     except psycopg2.Error as err:
         print(err)
+        return []
     
-    return admission_list
+    
     
 
 
@@ -73,8 +74,18 @@ Find a list of admissions based on the searchString provided as parameter
 See assignment description for search specification
 '''
 def findAdmissionsByCriteria(searchString):
-
-    return
+    try:
+        conn = openConnection()
+        cursor = conn.cursor()
+        cursor.callproc("admission_data_based_on_keyword", [str(searchString)])
+        records = cursor.fetchall()
+        columns = [desc[0] for desc in cursor.description]
+        admission_list = [dict(zip(columns, row)) for row in records]
+        cursor.close()
+        return admission_list
+    except psycopg2.Error as err:
+        print(err)
+        return []
 
 
 '''
@@ -91,14 +102,20 @@ def addAdmission(type, department, patient, condition, admin):
     except psycopg2.Error as err:
         print(err)
         return False
-    
-    return admission_list
 
 
 '''
 Update an existing admission
 '''
 def updateAdmission(id, type, department, dischargeDate, fee, patient, condition):
-    
-
-    return
+    try:
+        conn = openConnection()
+        cursor = conn.cursor()
+        data = (int(id), str(type), str(department), dischargeDate, str(fee), str(patient), str(condition))
+        cursor.execute("SELECT update_admission (%s, %s, %s, %s, %s, %s, %s)", data)
+        conn.commit()
+        cursor.close()
+        return True
+    except psycopg2.Error as err:
+        print(err)
+        return False
