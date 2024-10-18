@@ -13,7 +13,7 @@ def openConnection():
     userid = "postgres"
     passwd = "123456"
     myHost = "localhost"
-    database = "hospital_usyd"
+    database = "postgres"
 
 
     # Create a connection to the database
@@ -61,10 +61,11 @@ def findAdmissionsByAdmin(login):
         columns = [desc[0] for desc in cursor.description]
         admission_list = [dict(zip(columns, row)) for row in records]
         cursor.close()
+        return admission_list
     except psycopg2.Error as err:
         print(err)
     
-    return admission_list
+   
     
 
 
@@ -100,5 +101,11 @@ Update an existing admission
 '''
 def updateAdmission(id, type, department, dischargeDate, fee, patient, condition):
     
+    conn = openConnection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT update_admission(%s, %s, %s, %s, %s, %s, %s)", (int(id), str(type), str(department), dischargeDate,float(fee), str(patient), str(condition)))
+    conn.commit()
+    cursor.close()
+    return True
+   
 
-    return
